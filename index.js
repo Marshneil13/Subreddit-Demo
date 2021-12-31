@@ -7,8 +7,22 @@ const redditData = require('./data.json')
 
 console.log(redditData);
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine','ejs');
 app.set('views', path.join(__dirname, '/views'));
+
+app.get('/',(req,res)=>{
+    res.render('home')
+})
+app.get('/rand', (req,res)=>{
+    const num = Math.floor(Math.random()*10)+1;
+    res.render('random', {val: num});
+    // or simply have {num} and pass num in the EJS tag
+})
+app.get('/cats',(req,res)=>{
+    const cats = ['Janet', 'Millie', 'Coral', 'Pearl', 'Limcee', 'Steph', 'Romeo', 'Rose']
+    res.render('cats',{cats});
+}) 
 
 app.get('/r/:subreddit',(req,res)=>{
     const { subreddit } = req.params;
