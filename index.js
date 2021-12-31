@@ -12,16 +12,16 @@ app.set('view engine','ejs');
 app.set('views', path.join(__dirname, '/views'));
 
 app.get('/',(req,res)=>{
-    res.render('home')
+    res.render('home', {title: 'Home'});
 })
 app.get('/rand', (req,res)=>{
     const num = Math.floor(Math.random()*10)+1;
-    res.render('random', {val: num});
+    res.render('random', {val: num, title: 'Random'});
     // or simply have {num} and pass num in the EJS tag
 })
 app.get('/cats',(req,res)=>{
     const cats = ['Janet', 'Millie', 'Coral', 'Pearl', 'Limcee', 'Steph', 'Romeo', 'Rose']
-    res.render('cats',{cats});
+    res.render('cats',{cats, title: 'Cats'});
 }) 
 
 app.get('/r/:subreddit',(req,res)=>{
@@ -29,9 +29,9 @@ app.get('/r/:subreddit',(req,res)=>{
     const data = redditData[subreddit];
     // console.log(data);
     if(data){
-    res.render('subreddit',{ ...data });
+    res.render('subreddit',{ ...data, title: subreddit});
     } else{
-        res.render('not found',{ subreddit });
+        res.render('not found',{ subreddit, title: 'Error'});
     }
     //passing the data as an object
     // this will allow to access the individual properties of the object
